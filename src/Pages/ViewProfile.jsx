@@ -42,10 +42,19 @@ const ViewProfile = () => {
   return (
     <>
       <NavBar />
-      <section className="flex flex-col justify-center items-center text-white">
-        <div>{userData?.email}</div>
-        <div>{userData?.username}</div>
-        <div>{userData?.phoneNo}</div>
+      <section className="flex flex-col gap-10 justify-center items-center text-white text-left">
+        <h1 className="text-center my-6 text-3xl text-white mb-4">
+          User Details
+        </h1>
+        <div className="text-black flex-grow bg-gray-200 p-4 w-64 h-20 rounded-md text-2xl">
+          {userData?.email}
+        </div>
+        <div className="text-black flex-grow bg-gray-200 p-4 w-64 h-20 rounded-md text-2xl">
+          {userData?.username}
+        </div>
+        <div className="text-black flex-grow bg-gray-200 p-4 w-64 h-20 rounded-md text-2xl">
+          {userData?.phoneNo}
+        </div>
         <button onClick={updateUserDetails}>Update Data</button>
       </section>
     </>
