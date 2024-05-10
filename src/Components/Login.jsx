@@ -23,12 +23,11 @@ const Login = () => {
     localStorage.setItem("curentUser", JSON.stringify(input));
     e.preventDefault();
     try {
-      await validationSchema.validate(input, { abortEarly: false });
-
       if (input.email === "admin" && input.password === "456") {
         navigate("/admin");
         localStorage.setItem("adminLoggedIn", true);
       } else {
+        await validationSchema.validate(input, { abortEarly: false });
         const users = JSON.parse(localStorage.getItem("users")) || [];
         const votedUsers = JSON.parse(localStorage.getItem("log")) || [];
         const cantLogin = votedUsers.find((u) => u.email === input.email);
@@ -41,11 +40,13 @@ const Login = () => {
           );
           if (loggedUser) {
             navigate("/userDashboard");
+            toast.success("Login Successfull");
             localStorage.setItem("loggedIn", true);
             const updatedUsers = [...votedUsers, loggedUser];
             localStorage.setItem("log", JSON.stringify(updatedUsers));
           } else {
-            setErrors({ ...errors, password: "Please check your credentials" });
+            setErrors({ ...errors });
+            toast.error("Please check your credentials");
           }
         }
       }

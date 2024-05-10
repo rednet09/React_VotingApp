@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
-import { toast } from "react-toast";
-import { useNavigate } from "react-router-dom";
 import CandidateList from "../Utils/CandidateList";
 import NavBar from "../Components/NavBar";
 
-const AdminDashboard = (selected) => {
+const AdminDashboard = () => {
   const [updatedCandidateList, setUpdatedCandidateList] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const voteCount = JSON.parse(localStorage.getItem("updateCount"));
@@ -27,25 +24,11 @@ const AdminDashboard = (selected) => {
     });
   };
 
-  //   const handleLogout = () => {
-  //     localStorage.removeItem("adminLoggedin");
-  //     toast.success(`Logout Successful`);
-  //     navigate("/");
-  //   };
-
   return (
     <>
       <NavBar />
 
       <section className="mt-10">
-        {/* <div className="w-20 absolute top-5 right-10">
-          <button
-            onClick={handleLogout}
-            className="bg-[#292929] border-2 border-[#3e3e3e] rounded-lg text-white px-6 py-3 text-base hover:border-[#fff] cursor-pointer transition"
-          >
-            Logout
-          </button>
-        </div> */}
         <div className="text-white text-center">Admin dashboard</div>
         {updatedCandidateList.map((e) => (
           <div

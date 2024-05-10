@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import NavBar from "../Components/NavBar";
+import { Link } from "react-router-dom";
 const ViewProfile = () => {
   const [userData, setUserData] = useState(null);
   useEffect(() => {
@@ -55,12 +56,15 @@ const ViewProfile = () => {
         <div className="text-black flex-grow bg-gray-200 p-4 w-64 h-16 rounded-md text-2xl">
           {userData?.phoneNo}
         </div>
-        <button
+        <div className=" text-white mt-6 rounded-md bg-slate-500 p-4">
+          <Link to={"/userDashboard"}>Go Back</Link>
+        </div>
+        {/* <button
           className="mt-6 rounded-md bg-slate-500 p-4"
           onClick={updateUserDetails}
         >
           Update Data
-        </button>
+        </button> */}
       </section>
     </>
   );
