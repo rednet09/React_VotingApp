@@ -20,6 +20,7 @@ const Login = () => {
   });
 
   const handleLogin = async (e) => {
+    localStorage.setItem("curentUser", JSON.stringify(input));
     e.preventDefault();
     try {
       await validationSchema.validate(input, { abortEarly: false });

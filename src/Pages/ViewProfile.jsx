@@ -1,24 +1,32 @@
+import { useState, useEffect } from "react";
+import NavBar from "../Components/NavBar";
 const ViewProfile = () => {
-  const userDetails = JSON.parse(localStorage.getItem("users"));
-  console.log(userDetails, "dddddddddddddddddddddddddddddddddde");
+  const [userData, setUserData] = useState(null);
+  useEffect(() => {
+    const userDetails = JSON.parse(localStorage.getItem("users"));
+    const currentUser = JSON.parse(localStorage.getItem("curentUser"));
+    console.log("userDetails:", userDetails);
+    console.log("currentUser:", currentUser);
+    // Check if userDetails and currentUser exist
+    if (userDetails && currentUser) {
+      const currentUserDetails = userDetails.find(
+        (user) => user.email === currentUser.email
+      );
+      console.log("currentUserDetails:", currentUserDetails);
+      if (currentUserDetails) {
+        setUserData(currentUserDetails);
+      }
+    }
+  }, []);
+
+  console.log("userData", userData);
   return (
     <>
-      <section className="flex justify-center items-center text-white">
-        <div>
-          {console.log(userDetails, "mapppppppppppppppppppp")}
-          {}
-          {userDetails.map((e) => {
-            return (
-              <>
-                <div className="text-white bg-slate-100">
-                  {e.userName}
-                  {console.log(e.userName, "detailssssssssssss")}
-                </div>
-                <div className="text-white text-3xl">bosss</div>
-              </>
-            );
-          })}
-        </div>
+      <NavBar />
+      <section className="flex flex-col justify-center items-center text-white">
+        <div>{userData?.email}</div>
+        <div>{userData?.username}</div>
+        <div>{userData?.phoneNo}</div>
       </section>
     </>
   );
