@@ -9,7 +9,7 @@ import ViewProfile from "./Pages/ViewProfile";
 function App() {
   return (
     <>
-      <div className="flex justify-center items-center bg-black h-screen">
+      <div className="flex justify-center items-center bg-blue-400 h-screen">
         <ToastContainer delay={3000} />
         <BrowserRouter>
           <Routes>

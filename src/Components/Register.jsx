@@ -87,9 +87,9 @@ const Register = () => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div className="w-80 flex justify-center content-center rounded-2xl bg-slate-900">
-          <div className="flex flex-col gap-2 p-8 bg-slate-900">
-            <p className="text-center text-3xl text-gray-300 mb-4">Register</p>
+        <div className="w-80 flex justify-center content-center rounded-2xl bg-blue-900">
+          <div className="flex flex-col gap-2 p-8 bg-blue-900">
+            <p className="text-center text-3xl text-white mb-4">Register</p>
             <input
               name="username"
               value={input.username}
@@ -160,7 +160,7 @@ const Register = () => {
             )}
             <button
               type="submit"
-              className="inline-block cursor-pointer rounded-md bg-gray-700 px-4 py-3.5 text-center text-sm font-semibold uppercase text-white transition duration-200 ease-in-out hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-700 focus-visible:ring-offset-2 active:scale-95"
+              className="inline-block cursor-pointer rounded-md bg-white px-4 py-3.5 text-center text-sm font-semibold uppercase text-black transition duration-200 ease-in-out hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-700 focus-visible:ring-offset-2 active:scale-95"
             >
               Register
             </button>

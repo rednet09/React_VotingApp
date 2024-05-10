@@ -50,7 +50,7 @@ const AdminDashboard = (selected) => {
         {updatedCandidateList.map((e) => (
           <div
             key={e.id}
-            className="text-white flex gap-10 rounded-lg bg-slate-700 hover:bg-blue-400 my-6 py-5 px-5"
+            className="text-white flex gap-10 rounded-lg bg-gray-500 hover:bg-slate-900 my-6 py-5 px-5"
           >
             {e.label}'s Vote Count {e.voteCount}
           </div>

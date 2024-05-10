@@ -53,7 +53,7 @@ const UserDashboard = () => {
         </div> */}
 
         <form onSubmit={handleSubmit}>
-          <h1 className="text-center my-6 text-3xl text-gray-300 mb-4 ">
+          <h1 className="text-center my-6 text-3xl text-white mb-4 ">
             Please Select a Candidate to Vote for
           </h1>
           {radioList.map((e) => {
@@ -61,7 +61,7 @@ const UserDashboard = () => {
               <>
                 <div
                   key={e.id}
-                  className="text-white flex gap-10 rounded-lg bg-slate-700 hover:bg-blue-400 my-6 py-5 px-5"
+                  className="text-white flex gap-10 rounded-lg bg-gray-500 hover:bg-slate-900 my-6 py-5 px-5"
                 >
                   <input
                     className=""
