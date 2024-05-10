@@ -11,7 +11,6 @@ const Register = () => {
     email: "",
     phoneNo: "",
   });
-  // const [isUser, setIsUser] = useState(false);
   const [errors, setErrors] = useState({});
   const validationSchema = Yup.object().shape({
     username: Yup.string().required("Username is required"),
@@ -24,24 +23,6 @@ const Register = () => {
       .matches(/^\d{10}$/, "Invalid phone number")
       .required("Phone number is required"),
   });
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   await validationSchema.validate(input);
-  //   setIsUser(true);
-  //   if (input.username.trim() === "" || input.password.trim() === "") {
-  //     console.log("Username or password is empty.");
-  //     toast.error("Please Enter All the feilds");
-  //     return;
-  //   }
-
-  //   const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
-  //   const updatedUsers = [...existingUsers, input];
-  //   localStorage.setItem("users", JSON.stringify(updatedUsers));
-  //   navigate("/");
-  //   toast.success("Registered Successfully");
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -70,19 +51,6 @@ const Register = () => {
       setErrors(validationErrors);
     }
   };
-
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setInput({
-  //     ...input,
-  //     [name]: value,
-  //   });
-  //   // Clear error for the input field being changed
-  //   setErrors({
-  //     ...errors,
-  //     [name]: "",
-  //   });
-  // };
 
   return (
     <>
