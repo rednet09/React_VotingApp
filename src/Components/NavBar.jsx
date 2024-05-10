@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { TiThMenu } from "react-icons/ti";
 import { toast } from "react-toast";
 
-const NavBar = (selected) => {
+const NavBar = () => {
   const navigate = useNavigate();
   const [openAvatarDropdown, setOpenAvatarDropdown] = useState(false);
 

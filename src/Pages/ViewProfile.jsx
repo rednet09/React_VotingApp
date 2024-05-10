@@ -42,20 +42,31 @@ const ViewProfile = () => {
   return (
     <>
       <NavBar />
-      <section className="flex flex-col gap-10 justify-center items-center text-white text-left">
+      <section className="flex flex-col gap-2 justify-center items-center text-white text-left">
         <h1 className="text-center my-6 text-3xl text-white mb-4">
           User Details
         </h1>
-        <div className="text-black flex-grow bg-gray-200 p-4 w-64 h-20 rounded-md text-2xl">
+        <p className="">Email Address</p>
+
+        <div className="text-black flex-grow bg-gray-200 p-4 w-64 h-16 rounded-md text-2xl">
           {userData?.email}
         </div>
-        <div className="text-black flex-grow bg-gray-200 p-4 w-64 h-20 rounded-md text-2xl">
+        <p className="">User Name</p>
+
+        <div className="text-black flex-grow bg-gray-200 p-4 w-64 h-16 rounded-md text-2xl">
           {userData?.username}
         </div>
-        <div className="text-black flex-grow bg-gray-200 p-4 w-64 h-20 rounded-md text-2xl">
+        <p className="">Phone No</p>
+
+        <div className="text-black flex-grow bg-gray-200 p-4 w-64 h-16 rounded-md text-2xl">
           {userData?.phoneNo}
         </div>
-        <button onClick={updateUserDetails}>Update Data</button>
+        <button
+          className="mt-6 rounded-md bg-slate-500 p-4"
+          onClick={updateUserDetails}
+        >
+          Update Data
+        </button>
       </section>
     </>
   );
