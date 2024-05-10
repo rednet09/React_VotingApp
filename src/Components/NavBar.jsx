@@ -20,6 +20,8 @@ const NavBar = (selected) => {
   const handleLogout = () => {
     // selected ? console.log("user") : console.log("admin");
 
+    const voteduser =
+      localStorage.setItem("votedUser", JSON.stringify(selected)) || [];
     if (selected) {
       localStorage.removeItem("loggedin");
     } else {

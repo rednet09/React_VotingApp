@@ -8,6 +8,10 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+  });
 
   // const [isAdmin, setIsAdmin] = useState(false);
 
@@ -21,30 +25,47 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    await validationSchema.validate(input, { abortEarly: false });
-    // if (!input.email || !input.password) {
-    //   toast.error("All feilds are required");
-    //   return;
-    // }
-    if (input.email === "admin" && input.password === "456") {
-      navigate("/admin");
-      // : toast("not admin");
-      localStorage.setItem("adminLoggedin", true);
-    } else {
-      const users = JSON.parse(localStorage.getItem("users")) || [];
-      const loggedUser = users.find(
-        (user) => user.email === input.email && user.password === input.password
-      );
-      console.log(loggedUser, "logged user---------------------------");
+    try {
+      await validationSchema.validate(input, { abortEarly: false });
 
-      if (loggedUser) {
-        navigate("/userDashboard");
-        toast.success("Login Successfully!");
-
-        localStorage.setItem("loggedin", true);
+      // Validation passed
+      if (input.email === "admin" && input.password === "456") {
+        navigate("/admin");
+        localStorage.setItem("adminLoggedIn", true);
       } else {
-        toast.error("Please check your credentials");
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+
+        const loggedUser = users.find(
+          (user) =>
+            user.email === input.email && user.password === input.password
+        );
+
+        // const donLogin = JSON.parse(localStorage.getItem("votedUser")) || [];
+        // const existingUser = donLogin.find(
+        //   (user) => user.email === input.email
+        // );
+        // if (existingUser) {
+        //   toast.error(
+        //     "User with this email already exists. Please use a different email."
+        //   );
+        //   return;
+        // }
+        if (loggedUser) {
+          navigate("/userDashboard");
+          toast.success("Login Successfully!");
+          localStorage.setItem("loggedIn", true);
+        } else {
+          // toast.error("Please check your credentials");
+          setErrors({ ...errors, password: "Please check your credentials" });
+        }
       }
+    } catch (error) {
+      // Validation failed, handle errors
+      const validationErrors = {};
+      error.inner.forEach((err) => {
+        validationErrors[err.path] = err.message;
+      });
+      setErrors(validationErrors);
     }
   };
 
@@ -80,10 +101,13 @@ const Login = () => {
                     email: e.target.value,
                   });
                 }}
-                className="bg-slate-900 w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800 text-white"
+                className={`bg-slate-900 w-full rounded-lg border ${
+                  errors.email ? "border-red-500" : "border-gray-300"
+                } border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800 text-white`}
                 type="text"
                 placeholder="User Name"
               />
+              {errors.email && <p className="text-red-500">{errors.email}</p>}
               <input
                 name="password"
                 value={input.password}
@@ -93,10 +117,15 @@ const Login = () => {
                     password: e.target.value,
                   });
                 }}
-                className="bg-slate-900 w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800 text-white"
+                className={`bg-slate-900 w-full rounded-lg border ${
+                  errors.password ? "border-red-500" : "border-gray-300"
+                } border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800 text-white`}
                 type="password"
                 placeholder="Password"
               />
+              {errors.password && (
+                <p className="text-red-500">{errors.password}</p>
+              )}
               <button
                 type="submit"
                 className="inline-block cursor-pointer rounded-md bg-gray-700 px-4 py-3.5 text-center text-sm font-semibold uppercase text-white transition duration-200 ease-in-out hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-700 focus-visible:ring-offset-2 active:scale-95"

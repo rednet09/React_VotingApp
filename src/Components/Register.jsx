@@ -11,33 +11,79 @@ const Register = () => {
     email: "",
     phoneNo: "",
   });
-  const [isUser, setIsUser] = useState(false);
-
+  // const [isUser, setIsUser] = useState(false);
+  const [errors, setErrors] = useState({});
   const validationSchema = Yup.object().shape({
+    username: Yup.string().required("Username is required"),
     email: Yup.string()
       .email("Invalid email")
       .required("Email is required")
       .nullable(),
     password: Yup.string().required("Password is required").nullable(),
+    phoneNo: Yup.string()
+      .matches(/^\d{10}$/, "Invalid phone number")
+      .required("Phone number is required"),
   });
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   await validationSchema.validate(input);
+  //   setIsUser(true);
+  //   if (input.username.trim() === "" || input.password.trim() === "") {
+  //     console.log("Username or password is empty.");
+  //     toast.error("Please Enter All the feilds");
+  //     return;
+  //   }
+
+  //   const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
+  //   const updatedUsers = [...existingUsers, input];
+  //   localStorage.setItem("users", JSON.stringify(updatedUsers));
+  //   navigate("/");
+  //   toast.success("Registered Successfully");
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await validationSchema.validate(input);
-    setIsUser(true);
-    if (input.username.trim() === "" || input.password.trim() === "") {
-      console.log("Username or password is empty.");
-      toast.error("Please Enter All the feilds");
-      return;
-    }
+    try {
+      await validationSchema.validate(input, { abortEarly: false });
 
-    const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
-    const updatedUsers = [...existingUsers, input];
-    localStorage.setItem("users", JSON.stringify(updatedUsers));
-    navigate("/");
-    toast.success("Registered Successfully");
+      const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
+      const updatedUsers = [...existingUsers, input];
+      localStorage.setItem("users", JSON.stringify(updatedUsers));
+
+      const alredyRegistered = existingUsers.find(
+        (user) => user.email === input.email
+      );
+      if (alredyRegistered) {
+        toast.error("You've already registred");
+      } else {
+        navigate("/");
+        toast.success("Registered Successfully");
+      }
+    } catch (error) {
+      const validationErrors = {};
+      error.inner.forEach((err) => {
+        validationErrors[err.path] = err.message;
+      });
+      setErrors(validationErrors);
+    }
   };
+
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setInput({
+  //     ...input,
+  //     [name]: value,
+  //   });
+  //   // Clear error for the input field being changed
+  //   setErrors({
+  //     ...errors,
+  //     [name]: "",
+  //   });
+  // };
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -53,10 +99,15 @@ const Register = () => {
                   username: e.target.value,
                 });
               }}
-              className="bg-slate-900 w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800 text-white"
+              className={`bg-slate-900 w-full rounded-lg border ${
+                errors.username ? "border-red-500" : "border-gray-300"
+              } px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800 text-white`}
               type="text"
               placeholder="User Name"
             />
+            {errors.username && (
+              <p className="text-red-500">{errors.username}</p>
+            )}
             <input
               name="email"
               value={input.email}
@@ -66,10 +117,13 @@ const Register = () => {
                   email: e.target.value,
                 });
               }}
-              className="bg-slate-900 w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800 text-white"
+              className={`bg-slate-900 w-full rounded-lg border ${
+                errors.email ? "border-red-500" : "border-gray-300"
+              } px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800 text-white`}
               type="email"
               placeholder="Email Address"
             />
+            {errors.email && <p className="text-red-500">{errors.email}</p>}
             <input
               name="phoneNo"
               value={input.phoneNo}
@@ -79,10 +133,13 @@ const Register = () => {
                   phoneNo: e.target.value,
                 });
               }}
-              className="bg-slate-900 w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800 text-white"
-              type="number"
+              className={`bg-slate-900 w-full rounded-lg border ${
+                errors.phoneNo ? "border-red-500" : "border-gray-300"
+              } px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800 text-white`}
+              type="text"
               placeholder="Phone Number"
             />
+            {errors.phoneNo && <p className="text-red-500">{errors.phoneNo}</p>}
             <input
               name="password"
               value={input.password}
@@ -92,10 +149,15 @@ const Register = () => {
                   password: e.target.value,
                 });
               }}
-              className="bg-slate-900 w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800 text-white"
+              className={`bg-slate-900 w-full rounded-lg border ${
+                errors.password ? "border-red-500" : "border-gray-300"
+              } px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2 focus:ring-offset-gray-800 text-white`}
               type="password"
               placeholder="Password"
             />
+            {errors.password && (
+              <p className="text-red-500">{errors.password}</p>
+            )}
             <button
               type="submit"
               className="inline-block cursor-pointer rounded-md bg-gray-700 px-4 py-3.5 text-center text-sm font-semibold uppercase text-white transition duration-200 ease-in-out hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-700 focus-visible:ring-offset-2 active:scale-95"
