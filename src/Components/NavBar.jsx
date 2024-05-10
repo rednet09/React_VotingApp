@@ -1,30 +1,19 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TiThMenu } from "react-icons/ti";
 import { toast } from "react-toast";
 
 const NavBar = (selected) => {
   const navigate = useNavigate();
-  const [openNav, setOpenNav] = useState(false);
   const [openAvatarDropdown, setOpenAvatarDropdown] = useState(false);
-
-  const toggleNav = () => {
-    setOpenNav(!openNav);
-    setOpenAvatarDropdown(false);
-  };
 
   const toggleAvatarDropdown = () => {
     setOpenAvatarDropdown(!openAvatarDropdown);
   };
 
   const handleLogout = () => {
-    // selected ? console.log("user") : console.log("admin");
-
-    if (selected) {
-      localStorage.removeItem("loggedin");
-    } else {
-      localStorage.removeItem("adminLoggedIn");
-    }
+    localStorage.removeItem("loggedIn");
+    localStorage.removeItem("adminLoggedIn");
     toast.success(`Logout Successfull`);
 
     navigate("/");
@@ -51,7 +40,6 @@ const NavBar = (selected) => {
             } bg-slate-300 rounded shadow-md mt-2 space-y-2 right-6`}
           >
             <div className="p-4 flex flex-col w-40 text-white bg-slate-700 rounded-sm">
-              {/* <NavLink to={``}>View Profile</NavLink> */}
               <button
                 onClick={() => {
                   navigate("/viewProfile");
@@ -59,7 +47,6 @@ const NavBar = (selected) => {
               >
                 View Profile
               </button>
-              {/* <NavLink to="/dashboard">Logout</NavLink> */}
               <button onClick={handleLogout}>Logout</button>
             </div>
           </div>

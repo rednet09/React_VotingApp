@@ -5,19 +5,38 @@ const ViewProfile = () => {
   useEffect(() => {
     const userDetails = JSON.parse(localStorage.getItem("users"));
     const currentUser = JSON.parse(localStorage.getItem("curentUser"));
-    console.log("userDetails:", userDetails);
-    console.log("currentUser:", currentUser);
+
     // Check if userDetails and currentUser exist
     if (userDetails && currentUser) {
       const currentUserDetails = userDetails.find(
         (user) => user.email === currentUser.email
       );
-      console.log("currentUserDetails:", currentUserDetails);
       if (currentUserDetails) {
         setUserData(currentUserDetails);
       }
     }
   }, []);
+
+  const updateUserDetails = (updatedUserData) => {
+    // Retrieve user details from localStorage
+    const userDetails = JSON.parse(localStorage.getItem("users"));
+
+    // Find the index of the user to be updated
+    const userIndex = userDetails.findIndex(
+      (user) => user.email === updatedUserData.email
+    );
+
+    if (userIndex !== -1) {
+      // Update the user details
+      userDetails[userIndex] = updatedUserData;
+
+      // Store the updated user details back in localStorage
+      localStorage.setItem("users", JSON.stringify(userDetails));
+
+      // Update the state with the new user data
+      setUserData(updatedUserData);
+    }
+  };
 
   console.log("userData", userData);
   return (
@@ -27,6 +46,7 @@ const ViewProfile = () => {
         <div>{userData?.email}</div>
         <div>{userData?.username}</div>
         <div>{userData?.phoneNo}</div>
+        <button onClick={updateUserDetails}>Update Data</button>
       </section>
     </>
   );
