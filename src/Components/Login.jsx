@@ -84,7 +84,10 @@ const Login = () => {
                 type="text"
                 placeholder="Email"
               />
-              {errors.email && <p className="text-red-500">{errors.email}</p>}
+              {input.email === ""
+                ? errors.email && <p className="text-red-500">{errors.email}</p>
+                : ""}
+
               <input
                 name="password"
                 value={input.password}
@@ -100,9 +103,13 @@ const Login = () => {
                 type="password"
                 placeholder="Password"
               />
-              {errors.password && (
-                <p className="text-red-500">{errors.password}</p>
-              )}
+
+              {input.password === ""
+                ? errors.password && (
+                    <p className="text-red-500">{errors.password}</p>
+                  )
+                : ""}
+
               <button
                 type="submit"
                 className="inline-block cursor-pointer rounded-md bg-white px-4 py-3.5 text-center text-sm font-semibold uppercase text-black transition duration-200 ease-in-out hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-700 focus-visible:ring-offset-2 active:scale-95"
