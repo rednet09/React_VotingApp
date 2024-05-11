@@ -40,7 +40,7 @@ const Login = () => {
           );
           if (loggedUser) {
             navigate("/userDashboard");
-            toast.success("Login Successfull");
+            toast.success("Login Successfully");
             localStorage.setItem("loggedIn", true);
             const updatedUsers = [...votedUsers, loggedUser];
             localStorage.setItem("log", JSON.stringify(updatedUsers));
