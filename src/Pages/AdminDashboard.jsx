@@ -32,10 +32,10 @@ const AdminDashboard = () => {
         <div className="text-white text-center">Admin dashboard</div>
         {updatedCandidateList.map((e) => (
           <div
-            key={e.id}
+            key={e?.id}
             className="text-white flex gap-10 rounded-lg bg-gray-500 hover:bg-slate-900 my-6 py-5 px-5"
           >
-            {e.label}'s Vote Count {e.voteCount}
+            {e?.label}'s Vote Count {e?.voteCount}
           </div>
         ))}
       </section>

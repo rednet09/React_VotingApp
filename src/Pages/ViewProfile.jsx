@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import NavBar from "../Components/NavBar";
-import { Link } from "react-router-dom";
+
 const ViewProfile = () => {
   const [userData, setUserData] = useState(null);
+  const [updatedUserData, setUpdatedUserData] = useState(null);
+
   useEffect(() => {
     const userDetails = JSON.parse(localStorage.getItem("users"));
     const currentUser = JSON.parse(localStorage.getItem("curentUser"));
@@ -17,23 +19,55 @@ const ViewProfile = () => {
     }
   }, []);
 
-  const updateUserDetails = (updatedUserData) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUpdatedUserData({
+      ...updatedUserData,
+      [name]: value,
+    });
+  };
+
+  // const handleSubmit = () => {
+  //   const userDetails = JSON.parse(localStorage.getItem("users"));
+
+  //   const userIndex = userDetails.findIndex(
+  //     (user) => user.email === updatedUserData.email
+  //   );
+
+  //   console.log(userIndex, "index");
+
+  //   if (userIndex !== -1) {
+  //     userDetails[userIndex] = updatedUserData;
+
+  //     localStorage.setItem("users", JSON.stringify(userDetails));
+
+  //     setUserData(updatedUserData);
+  //   }
+  // };
+
+  const updateUserDetails = (updatedUserData, email) => {
     const userDetails = JSON.parse(localStorage.getItem("users"));
-
-    const userIndex = userDetails.findIndex(
-      (user) => user.email === updatedUserData.email
-    );
-
+    console.log(updatedUserData, "----------");
+    const userIndex = userDetails.findIndex((user) => user.email === email);
+    console.log(userIndex, "index");
     if (userIndex !== -1) {
-      userDetails[userIndex] = updatedUserData;
+      // const { email, password } = userDetails[userIndex];
+      const newUserDetails = {
+        ...updatedUserData,
+        email: userDetails?.email,
+        password: userDetails.password,
+      };
 
+      userDetails[userIndex] = newUserDetails;
+      console.log(updatedUserData, userDetails[userIndex]);
       localStorage.setItem("users", JSON.stringify(userDetails));
 
-      setUserData(updatedUserData);
+      setUserData(updatedUserData); // Update state with the new user data
     }
   };
 
   console.log("userData", userData);
+  console.log("updated ", updatedUserData);
   return (
     <>
       <NavBar />
@@ -42,29 +76,31 @@ const ViewProfile = () => {
           User Details
         </h1>
         <p className="">Email Address</p>
-
         <div className="text-black flex-grow bg-gray-200 p-4 w-64 h-16 rounded-md text-2xl">
           {userData?.email}
         </div>
         <p className="">User Name</p>
-
-        <div className="text-black flex-grow bg-gray-200 p-4 w-64 h-16 rounded-md text-2xl">
-          {userData?.username}
-        </div>
+        <input
+          type="text"
+          name="username"
+          value={updatedUserData?.username || userData?.username || ""}
+          onChange={handleChange}
+          className="text-black flex-grow bg-gray-200 p-4 w-64 h-16 rounded-md text-2xl"
+        />
         <p className="">Phone No</p>
-
-        <div className="text-black flex-grow bg-gray-200 p-4 w-64 h-16 rounded-md text-2xl">
-          {userData?.phoneNo}
-        </div>
-        <div className=" text-white mt-6 rounded-md bg-slate-500 p-4">
-          <Link to={"/userDashboard"}>Go Back</Link>
-        </div>
-        {/* <button
+        <input
+          type="text"
+          name="phoneNo"
+          value={updatedUserData?.phoneNo || userData?.phoneNo || ""}
+          onChange={handleChange}
+          className="text-black flex-grow bg-gray-200 p-4 w-64 h-16 rounded-md text-2xl"
+        />
+        <button
           className="mt-6 rounded-md bg-slate-500 p-4"
-          onClick={updateUserDetails}
+          onClick={() => updateUserDetails(updatedUserData, userData?.email)}
         >
           Update Data
-        </button> */}
+        </button>
       </section>
     </>
   );

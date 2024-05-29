@@ -37,12 +37,12 @@ const UserDashboard = () => {
             return (
               <>
                 <div
-                  key={e.id}
+                  key={e?.id}
                   className="text-white flex gap-10 rounded-lg bg-gray-500 hover:bg-slate-900 my-6 py-5 px-5"
                 >
                   <input
                     className=""
-                    id={e.id}
+                    id={e?.id}
                     type="radio"
                     name="radioOptions"
                     value={e.value}
