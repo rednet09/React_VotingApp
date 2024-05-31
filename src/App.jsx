@@ -1,6 +1,6 @@
 import Login from "./Components/Login";
 import Register from "./Components/Register";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toast";
 import ProtectedRoutes from "./Services/ProtectedRoutes";
 import UserDashboard from "./Pages/UserDashboard";
@@ -11,7 +11,7 @@ function App() {
     <>
       <div className="flex justify-center items-center bg-blue-400 h-screen">
         <ToastContainer delay={3000} />
-        <BrowserRouter>
+        <HashRouter>
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -21,7 +21,7 @@ function App() {
               <Route path="/viewProfile" element={<ViewProfile />} />
             </Route>
           </Routes>
-        </BrowserRouter>
+        </HashRouter>
       </div>
     </>
   );
